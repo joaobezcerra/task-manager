@@ -17,7 +17,7 @@ export class TasksService {
     });
   }
 
-  async getTaskById(id: number): Promise<Task | null> {
+  async getTaskById(id: number): Promise<Task> {
     const task = await this.prisma.task.findUnique({ where: { id } });
     if (!task) {
       throw new NotFoundException(`Task not found`);
@@ -25,7 +25,7 @@ export class TasksService {
     return task;
   }
 
-  async changeTask(id: number, dto: ChangeTaskDto): Promise<Task | null> {
+  async changeTask(id: number, dto: ChangeTaskDto): Promise<Task> {
     await this.getTaskById(id);
 
     return this.prisma.task.update({
@@ -37,7 +37,7 @@ export class TasksService {
     });
   }
 
-  async completeTask(id: number): Promise<Task | null> {
+  async completeTask(id: number): Promise<Task> {
     await this.getTaskById(id);
 
     return this.prisma.task.update({
@@ -46,7 +46,7 @@ export class TasksService {
     });
   }
 
-  async uncompleteTask(id: number): Promise<Task | null> {
+  async uncompleteTask(id: number): Promise<Task> {
     await this.getTaskById(id);
 
     return this.prisma.task.update({
@@ -55,7 +55,7 @@ export class TasksService {
     });
   }
 
-  async deleteTask(id: number): Promise<Task | null> {
+  async deleteTask(id: number): Promise<Task> {
     await this.getTaskById(id);
 
     return this.prisma.task.delete({ where: { id } });
