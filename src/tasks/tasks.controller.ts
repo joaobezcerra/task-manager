@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
@@ -26,14 +25,8 @@ export class TasksController {
 
   @Get(':id')
   @ApiNotFoundResponse({ description: 'Task not found' })
-  async getTaskById(@Param('id', ParseIntPipe) id: number) {
-    const task = await this.tasksService.getTaskById(id);
-
-    if (!task) {
-      throw new NotFoundException(`Task not found`);
-    }
-
-    return task;
+  getTaskById(@Param('id', ParseIntPipe) id: number) {
+    return this.tasksService.getTaskById(id);
   }
 
   @Patch(':id')
@@ -59,13 +52,7 @@ export class TasksController {
 
   @Delete(':id')
   @ApiNotFoundResponse({ description: 'Task not found' })
-  async deleteTask(@Param('id', ParseIntPipe) id: number) {
-    const task = await this.tasksService.deleteTask(id);
-
-    if (!task) {
-      throw new NotFoundException(`Task not found`);
-    }
-
-    return task;
+  deleteTask(@Param('id', ParseIntPipe) id: number) {
+    return this.tasksService.deleteTask(id);
   }
 }
